@@ -5,7 +5,7 @@ import { GiChiliPepper } from 'react-icons/gi';
 
 export default function Navbar() {
   return (
-    <nav className="flex flex-row gap-5 items-center">
+    <nav className="flex flex-row gap-5 items-center mb-12">
       <div className="flex flex-row gap-2 items-center">
         <GiChiliPepper color="red" size={50} />
       </div>

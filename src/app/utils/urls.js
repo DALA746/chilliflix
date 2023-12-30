@@ -8,7 +8,7 @@ export const FETCH_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${k
 export const DETAILS_URL = (movieId) =>
   `https://api.themoviedb.org/3/movie/${movieId}?api_key=${key}&language=en-US'`;
 
-export const TOP_RATED_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY}&language=en-US&page=1`;
+export const TOP_RATED_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&language=en-US&page=1`;
 
 export const TOP_RATED_DETAILS_URL = (topMovieId) =>
   `https://api.themoviedb.org/3/movie/${topMovieId}?api_key=${process.env.API_KEY}&language=en-US`;

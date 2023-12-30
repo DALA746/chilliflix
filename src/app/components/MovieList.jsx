@@ -1,36 +1,30 @@
-'use client';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { FETCH_URL } from '../utils/urls';
-import MovieCard from './MovieCard';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { FETCH_URL, TOP_RATED_URL } from '../utils/urls';
 import Slider from './Slider';
-import { Suspense } from 'react';
 
-export default function MovieList() {
-  const [movies, setMovies] = useState([]);
+async function fetchMovies() {
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  const res = await fetch(FETCH_URL);
+  // const data = await res.json();
+  return res.json();
+}
 
-  useEffect(() => {
-    async function fetchMovies() {
-      const res = await fetch(FETCH_URL);
-      const data = await res.json();
-      setMovies(data.results);
-    }
+async function fetchTopRated() {
+  const res = await fetch(TOP_RATED_URL);
+  return res.json();
+}
 
-    fetchMovies();
-  }, []);
+export default async function MovieList() {
+  // const [movies, setMovies] = useState([]);
+  const { results } = await fetchMovies();
+  const data = await fetchTopRated();
+  console.log(data.results);
 
   // TODO: add loading
 
   return (
-    <div className="m-2">
-      <Suspense fallback={<h2>🌀 Loading...</h2>}>
-        <Slider movies={movies} title="Populära filmer" />
-      </Suspense>
+    <div className="m-2 relative">
+      <Slider movies={results} title="Populära filmer" />
+      <Slider movies={data.results} title="Top Rated" />
     </div>
   );
-}
-
-function Loading() {
-  return <h2>🌀 Loading...</h2>;
 }

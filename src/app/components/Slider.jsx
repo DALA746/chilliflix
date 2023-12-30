@@ -6,14 +6,10 @@ import Link from 'next/link';
 
 export default function Slider({ movies, title }) {
   // TODO: hide left arrow when at the start of a slider
+  // fix bug with arrows when adding new slider
   const slideLeft = () => {
     const slider = document.getElementById('slider');
     const leftArrow = document.getElementById('left-arrow');
-    // if (slider.scrollLeft === 0) {
-    //   leftArrow.style.visibility = 'hidden';
-    // } else {
-    //   leftArrow.style.visibility = 'none';
-    // }
 
     slider.scrollLeft = slider.scrollLeft - 500;
   };
