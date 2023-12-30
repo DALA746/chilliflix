@@ -1,30 +1,25 @@
 import { FETCH_URL, TOP_RATED_URL } from '../utils/urls';
 import Slider from './Slider';
 
-async function fetchMovies() {
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
-  const res = await fetch(FETCH_URL);
-  // const data = await res.json();
-  return res.json();
-}
-
-async function fetchTopRated() {
-  const res = await fetch(TOP_RATED_URL);
-  return res.json();
+function fetchAll() {
+  const urls = [FETCH_URL, TOP_RATED_URL];
+  return Promise.all(
+    urls.map((url) =>
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => ({ data, url }))
+        .catch((error) => ({ error, url }))
+    )
+  );
 }
 
 export default async function MovieList() {
-  // const [movies, setMovies] = useState([]);
-  const { results } = await fetchMovies();
-  const data = await fetchTopRated();
-  console.log(data.results);
-
-  // TODO: add loading
+  const [popularData, topRatedData] = await fetchAll();
 
   return (
-    <div className="m-2 relative">
-      <Slider movies={results} title="Populära filmer" />
-      <Slider movies={data.results} title="Top Rated" />
+    <div className="relative ml-12 flex flex-col gap-6">
+      <Slider movies={popularData.data.results} title="Popular movies" />
+      <Slider movies={topRatedData.data.results} title="Top rated" />
     </div>
   );
 }
