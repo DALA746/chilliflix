@@ -22,12 +22,12 @@ export default function Slider({ movies, title }) {
     updateArrowVisibility();
 
     // Cleanup the event listener on component unmount
-    // return () => {
-    //   containerRef.current?.removeEventListener(
-    //     'scroll',
-    //     updateArrowVisibility
-    //   );
-    // };
+    return () => {
+      containerRef.current?.removeEventListener(
+        'scroll',
+        updateArrowVisibility
+      );
+    };
   }, []);
 
   const slideLeft = () => {
@@ -62,7 +62,10 @@ export default function Slider({ movies, title }) {
           }}>
           {movies &&
             movies.map((movie) => (
-              <Link key={movie.id} href={`/details/${movie.id}`}>
+              <Link
+                key={movie.id}
+                href={`/details/${movie.id}`}
+                className="relative">
                 <MovieCard key={movie.id} movie={movie} />
               </Link>
             ))}
