@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa6';
 import '../globals.css';
+import { IoArrowDownCircleOutline } from 'react-icons/io5';
 
 export default function HeroBanner({ movie }) {
   return (
@@ -19,23 +20,20 @@ export default function HeroBanner({ movie }) {
       <div className="absolute max-w-[500px] inset-0 flex items-start justify-center flex-col gap-6 ml-12 animate-fade-right animate-once animate-ease-linear">
         <h2 className="text-white text-5xl font-bold">{movie.title}</h2>
         <p className="">{movie.overview}</p>
-        <Link href={`/details/${movie.id}`}>
+        <Link href={`/${movie.name ? 'series' : 'movies'}/${movie.id}`}>
           <button className="bg-red-600 text-white hover:bg-red-400 font-bold py-2 px-4 rounded inline-flex items-center gap-3">
             <span>More</span>
             <FaArrowRight />
           </button>
         </Link>
       </div>
-      {/* <svg
-        class="animate-bounce w-6 h-6 text-gray-900"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        stroke="currentColor">
-        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-      </svg> */}
+      {/* <div className="hidden md:flex relative items-center justify-center">
+        <IoArrowDownCircleOutline
+          size={50}
+          color="white"
+          className="animate-bounce absolute bottom-12"
+        />
+      </div> */}
     </div>
   );
 }

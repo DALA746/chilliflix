@@ -16,7 +16,8 @@ function fetchAll() {
     API_URL('movie', 'popular', 1),
     API_URL('movie', 'top_rated', 1),
     API_URL('movie', 'now_playing', 1),
-    API_URL('movie', 'upcoming', 1)
+    API_URL('movie', 'upcoming', 1),
+    API_URL('tv', 'popular', 1)
   ];
   return Promise.all(
     urls.map((url) =>
@@ -29,7 +30,7 @@ function fetchAll() {
 }
 
 export default async function Home() {
-  const [popularData, topRatedData, nowPlayingData, upcomingData] =
+  const [popularData, topRatedData, nowPlayingData, upcomingData, seriesData] =
     await fetchAll();
 
   const random =
@@ -42,9 +43,11 @@ export default async function Home() {
       <HeroBanner movie={random} />
       <div className="relative ml-6 sm:ml-12 mb-12 flex flex-col gap-6">
         <Slider movies={popularData.data.results} title="Popular movies" />
+        <Slider
+          movies={seriesData.data.results.slice(0, 10)}
+          title="Popular series"
+        />
         <Slider movies={upcomingData.data.results} title="Upcoming movies" />
-        <Slider movies={topRatedData.data.results} title="Top rated" />
-        <Slider movies={nowPlayingData.data.results} title="Now playing" />
       </div>
     </main>
   );

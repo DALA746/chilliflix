@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import MovieCard from './MovieCard';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import Link from 'next/link';
 
 export default function Slider({ movies, title }) {
   const [atStart, setAtStart] = useState();
@@ -54,20 +53,15 @@ export default function Slider({ movies, title }) {
           size={40}
         />
         <div
-          className="flex overflow-x-scroll whitespace-nowrap scrollbar-hide flex-row gap-5"
+          className="flex overflow-x-scroll whitespace-nowrap scrollbar-hide flex-row gap-10"
           ref={containerRef}
           style={{
             scrollBehavior: 'smooth',
             transition: 'scroll-left 0.5s ease-in-out'
           }}>
           {movies &&
-            movies.map((movie) => (
-              <Link
-                key={movie.id}
-                href={`/details/${movie.id}`}
-                className="relative">
-                <MovieCard key={movie.id} movie={movie} />
-              </Link>
+            movies.map((movie, index) => (
+              <MovieCard key={movie.id} movie={movie} index={index} />
             ))}
         </div>
         <MdChevronRight

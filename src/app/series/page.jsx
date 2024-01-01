@@ -1,29 +1,15 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { GiChiliPepper } from 'react-icons/gi';
-import { TV_SERIES_TOP_RATED_URL, API_URL } from '../utils/urls';
-import MovieCard from '../components/MovieCard';
-import Slider from '../components/Slider';
-
-async function fetchSeries() {
-  const res = await fetch(API_URL('tv', 'top_rated', 1));
+import { API_URL } from '../utils/urls';
+import FilterMenu from '../components/FilterMenu';
+async function fetchSeries(category) {
+  'use server';
+  const res = await fetch(API_URL('tv', category, 1));
   return res.json();
 }
 
 export default async function Series() {
-  const { results } = await fetchSeries();
-
   return (
-    <div className="flex flex-row flex-wrap item-center gap-5 justify-center">
-      {results &&
-        results.map((movie) => (
-          <Link
-            key={movie.id}
-            href={`/details/${movie.id}`}
-            className="relative">
-            <MovieCard key={movie.id} movie={movie} />
-          </Link>
-        ))}
-    </div>
+    <main className=" w-full h-screen flex flex-col gap-6 my-12 mr-0 ml-6 sm:m-12 relative z-10">
+      <FilterMenu fetchSeries={fetchSeries} />
+    </main>
   );
 }
