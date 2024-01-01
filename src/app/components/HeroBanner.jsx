@@ -6,7 +6,7 @@ import '../globals.css';
 
 export default function HeroBanner({ movie }) {
   return (
-    <div className="fade-top-and-bottom relative">
+    <div className="hidden sm:block fade-top-and-bottom relative ">
       <Image
         src={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
         alt="/"
@@ -15,8 +15,8 @@ export default function HeroBanner({ movie }) {
         className="h-full w-full object-cover rounded-md"
         priority
       />
-      <div className="absolute inset-0 bg-gray-500 opacity-40 rounded-md"></div>
-      <div className="absolute max-w-[500px] inset-0 flex items-start justify-center flex-col gap-6 ml-12">
+      <div className="absolute inset-0 bg-gray-950 h-full w-full object-cover opacity-40 rounded-md"></div>
+      <div className="absolute max-w-[500px] inset-0 flex items-start justify-center flex-col gap-6 ml-12 animate-fade-right animate-once animate-ease-linear">
         <h2 className="text-white text-5xl font-bold">{movie.title}</h2>
         <p className="">{movie.overview}</p>
         <Link href={`/details/${movie.id}`}>
@@ -26,6 +26,16 @@ export default function HeroBanner({ movie }) {
           </button>
         </Link>
       </div>
+      {/* <svg
+        class="animate-bounce w-6 h-6 text-gray-900"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg> */}
     </div>
   );
 }

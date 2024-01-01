@@ -43,8 +43,8 @@ export default function Slider({ movies, title }) {
   };
 
   return (
-    <div>
-      <h2 className="pb-4 text-xl">{title}</h2>
+    <div className="">
+      <h2 className="pb-4 text-xl font-bold">{title}</h2>
       <div className="relative flex flex-row items-center">
         <MdChevronLeft
           className={`opacity-50 cursor-pointer hover:opacity-100 absolute z-10 ${
