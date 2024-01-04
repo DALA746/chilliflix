@@ -81,3 +81,7 @@
 .box-shadow {
   box-shadow: 1px 1px 67px 0px rgba(255, 255, 255, 1);
 }
+
+.custom-border {
+  border-radius: 40px 40px 999em 40px;
+}

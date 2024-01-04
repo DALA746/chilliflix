@@ -3,11 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import MovieCard from './MovieCard';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
-export default function Slider({ movies, title }) {
+export default function Slider({ movies, title, isTop10 }) {
+  console.log(isTop10);
   const [atStart, setAtStart] = useState();
   const [atEnd, setAtEnd] = useState();
-  const containerRef = useRef(null);
 
+  const containerRef = useRef(null);
   useEffect(() => {
     const updateArrowVisibility = () => {
       if (containerRef.current) {
@@ -42,9 +43,9 @@ export default function Slider({ movies, title }) {
   };
 
   return (
-    <div className="">
-      <h2 className="pb-4 text-xl font-bold">{title}</h2>
-      <div className="relative flex flex-row items-center">
+    <>
+      <h2 className="pb-4 text-3xl font-bold">{title}</h2>
+      <div className="relative flex flex-row items-center pr-5">
         <MdChevronLeft
           className={`opacity-50 cursor-pointer hover:opacity-100 absolute z-10 ${
             atStart ? 'hidden' : ''
@@ -53,7 +54,9 @@ export default function Slider({ movies, title }) {
           size={40}
         />
         <div
-          className="flex overflow-x-scroll whitespace-nowrap scrollbar-hide flex-row gap-10"
+          className={`flex overflow-x-scroll whitespace-nowrap scrollbar-hide flex-row  ${
+            isTop10 && isTop10 === true ? 'gap-[80px]' : 'gap-5'
+          }`}
           ref={containerRef}
           style={{
             scrollBehavior: 'smooth',
@@ -72,6 +75,6 @@ export default function Slider({ movies, title }) {
           size={40}
         />
       </div>
-    </div>
+    </>
   );
 }

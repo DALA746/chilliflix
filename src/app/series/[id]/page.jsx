@@ -6,6 +6,8 @@ async function fetchDetails(type, id) {
   return res.json();
 }
 
+// button back TODO
+
 export default async function SeriesDetails({ params }) {
   const { id } = params;
   const movie = await fetchDetails('tv', id);

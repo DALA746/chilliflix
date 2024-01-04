@@ -17,7 +17,7 @@ function fetchAll() {
     API_URL('movie', 'top_rated', 1),
     API_URL('movie', 'now_playing', 1),
     API_URL('movie', 'upcoming', 1),
-    API_URL('tv', 'popular', 1)
+    API_URL('tv', 'top_rated', 1)
   ];
   return Promise.all(
     urls.map((url) =>
@@ -45,7 +45,8 @@ export default async function Home() {
         <Slider movies={popularData.data.results} title="Popular movies" />
         <Slider
           movies={seriesData.data.results.slice(0, 10)}
-          title="Popular series"
+          title="Top rated series"
+          isTop10={true}
         />
         <Slider movies={upcomingData.data.results} title="Upcoming movies" />
       </div>
