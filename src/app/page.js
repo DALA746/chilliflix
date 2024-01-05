@@ -1,17 +1,9 @@
-import Image from 'next/image';
 import HeroBanner from './components/HeroBanner';
 import './globals.css';
-import {
-  FETCH_URL,
-  TOP_RATED_URL,
-  NOW_PLAYING_URL,
-  UPCOMING_URL,
-  API_URL
-} from '../app/utils/urls';
+import { API_URL } from '../app/utils/urls';
 import Slider from '../app/components/Slider';
 
 function fetchAll() {
-  // const urls = [FETCH_URL, TOP_RATED_URL, NOW_PLAYING_URL, UPCOMING_URL];
   const urls = [
     API_URL('movie', 'popular', 1),
     API_URL('movie', 'top_rated', 1),

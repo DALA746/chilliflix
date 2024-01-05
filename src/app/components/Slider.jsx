@@ -4,7 +4,6 @@ import MovieCard from './MovieCard';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 export default function Slider({ movies, title, isTop10 }) {
-  console.log(isTop10);
   const [atStart, setAtStart] = useState();
   const [atEnd, setAtEnd] = useState();
 

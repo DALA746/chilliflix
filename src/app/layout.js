@@ -1,13 +1,16 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/Navbar';
-import HeroBanner from './components/HeroBanner';
+import { GiChiliPepper } from 'react-icons/gi';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'ChiliFlix',
-  description: 'A spicy collection of great movies & TV series'
+  title: 'ChilliFlix',
+  description: 'A spicy collection of awesome movies & TV series',
+  icons: {
+    icon: '/icon.ico' // /public path
+  }
 };
 
 export default function RootLayout({ children }) {

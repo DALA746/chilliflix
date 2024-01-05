@@ -6,15 +6,13 @@ async function fetchDetails(type, id) {
   return res.json();
 }
 
-// button back TODO
-
 export default async function SeriesDetails({ params }) {
   const { id } = params;
-  const movie = await fetchDetails('tv', id);
+  const serie = await fetchDetails('tv', id);
 
   return (
     <main className="absolute top-0 z-0 w-full h-screen flex flex-row gap-6">
-      <Details movie={movie} />
+      <Details movie={serie} />
     </main>
   );
 }

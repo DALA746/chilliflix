@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { GiChiliPepper } from 'react-icons/gi';
 import Details from '@/app/components/Details';
 import { API_DETAILS_URL } from '@/app/utils/urls';
 

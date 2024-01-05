@@ -1,27 +1,36 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
 import List from './List';
+import Loading from '../loading';
+import { usePathname } from 'next/navigation';
 
-export default function FilterMenu({ fetchSeries }) {
+export default function Media({ fetchSeries, fetchMovies }) {
   // todo: pagination
-  // button back make
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [results, setResults] = useState();
+  const [loading, setLoading] = useState(true);
+  const [results, setResults] = useState([]);
   const [title, setTitle] = useState('Popular');
   const dropdownRef = useRef(null);
   const seriesCategory = [
     { category: 'popular', title: 'Popular' },
-    { category: 'airing_today', title: 'Airing today' },
+    {
+      category: pathname === '/movies' ? 'upcoming' : 'airing_today',
+      title: pathname === '/movies' ? 'Upcoming' : 'Airing today'
+    },
     { category: 'top_rated', title: 'Top rated' }
   ];
 
   const handleClick = async (item) => {
+    setLoading(true);
     setIsOpen(false);
     setTitle(item.title);
-
-    const { results } = await fetchSeries(item.category);
+    const { results } =
+      pathname === '/series'
+        ? await fetchSeries(item.category)
+        : await fetchMovies(item.category);
     setResults(results);
+    setLoading(false);
   };
 
   const toggleDropdown = () => {
@@ -35,24 +44,27 @@ export default function FilterMenu({ fetchSeries }) {
   };
 
   useEffect(() => {
-    // setTitle('Popular');
+    setTitle('Popular');
+    setLoading(true);
     async function getData() {
-      const { results } = await fetchSeries();
+      const { results } =
+        pathname === '/series' ? await fetchSeries() : await fetchMovies();
       setResults(results);
     }
-
     getData();
+    setLoading(false);
 
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [fetchMovies, fetchSeries, pathname]);
 
   return (
-    <>
-      <div className="flex justify-end">
+    <div className="relative flex flex-col gap-7 h-screen">
+      {loading && <Loading />}
+      <div className="flex justify-start">
         <div ref={dropdownRef} className="relative w-full sm:max-w-sm">
           <div className=" w-full">
             <button
@@ -77,9 +89,8 @@ export default function FilterMenu({ fetchSeries }) {
             </div>
           )}
         </div>
-        {/* <div>{results.length} st</div> */}
       </div>
       <List results={results} />
-    </>
+    </div>
   );
 }
