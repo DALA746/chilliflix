@@ -44,15 +44,17 @@ export default function Media({ fetchSeries, fetchMovies }) {
   };
 
   useEffect(() => {
-    setTitle('Popular');
-    setLoading(true);
     async function getData() {
+      setLoading(true);
+
       const { results } =
         pathname === '/series' ? await fetchSeries() : await fetchMovies();
-      setResults(results);
+      if (results) {
+        setResults(results);
+        setLoading(false);
+      }
     }
     getData();
-    setLoading(false);
 
     document.addEventListener('mousedown', handleClickOutside);
 
