@@ -22,7 +22,6 @@ export default function Media({ fetchSeries, fetchMovies }) {
   ];
 
   const handleClick = async (item) => {
-    setLoading(true);
     setIsOpen(false);
     setTitle(item.title);
     const { results } =

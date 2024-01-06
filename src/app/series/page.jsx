@@ -8,7 +8,7 @@ async function fetchSeries(category = 'popular') {
 }
 export default async function Series() {
   return (
-    <main className="relative z-10 w-full h-screen flex flex-col gap-4 mb-12">
+    <main className="relative w-full h-screen flex flex-col gap-4 mb-12">
       <div className="ml-8 mr-8 mb-8 h-screen flex flex-col gap-5 sm:ml-12 sm:mr-12 ">
         <Media fetchSeries={fetchSeries} />
       </div>
