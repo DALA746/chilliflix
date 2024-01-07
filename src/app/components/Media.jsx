@@ -5,7 +5,6 @@ import Loading from '../loading';
 import { usePathname } from 'next/navigation';
 
 export default function Media({ fetchSeries, fetchMovies }) {
-  // todo: pagination
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
