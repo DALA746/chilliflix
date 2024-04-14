@@ -40,13 +40,13 @@ export default function Details({ movie }) {
             <p>Learn more</p>
           </Link>
         )}
-        <p className="bg-orange-500 p-1 font-bold rounded w-[47px] text-center">
+        <p className="bg-orange-500 p-2 rounded w-[47px] text-center">
           {Math.round(movie.vote_average * 100) / 100}
         </p>
         <div className="flex flex-row flex-wrap gap-2">
           {movie.genres &&
             movie.genres.map((genre) => (
-              <div key={genre.id} className="bg-red-500 font-bold p-1 rounded">
+              <div key={genre.id} className="bg-red-500 p-2 rounded">
                 <span>{genre.name}</span>
               </div>
             ))}
