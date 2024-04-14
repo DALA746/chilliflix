@@ -3,91 +3,56 @@ import { useState, useEffect, useRef } from 'react';
 import List from './List';
 import Loading from '../loading';
 import { usePathname } from 'next/navigation';
+import DropDownMenu from './DropDownMenu';
 
-export default function Media({ fetchSeries, fetchMovies }) {
+export default function Media({ fetchSeries, fetchMovies, results1 }) {
+  console.log(results1, 'results');
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [searchItem, setSearchItem] = useState('');
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-  const [title, setTitle] = useState('Popular');
-  const dropdownRef = useRef(null);
-  const seriesCategory = [
-    { category: 'popular', title: 'Popular' },
-    {
-      category: pathname === '/movies' ? 'upcoming' : 'airing_today',
-      title: pathname === '/movies' ? 'Upcoming' : 'Airing today'
-    },
-    { category: 'top_rated', title: 'Top rated' }
-  ];
 
-  const handleClick = async (item) => {
-    setIsOpen(false);
-    setTitle(item.title);
-    const { results } =
-      pathname === '/series'
-        ? await fetchSeries(item.category)
-        : await fetchMovies(item.category);
-    setResults(results);
-    setLoading(false);
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+
+    console.log(results, 'results');
+
+    const filteredItems = results.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setFilteredItems(filteredItems);
   };
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // useEffect(() => {
+  //   async function getData() {
+  //     setLoading(true);
 
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    async function getData() {
-      setLoading(true);
-
-      const { results } =
-        pathname === '/series' ? await fetchSeries() : await fetchMovies();
-      if (results) {
-        setResults(results);
-        setLoading(false);
-      }
-    }
-    getData();
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [fetchMovies, fetchSeries, pathname]);
+  //     const { results } =
+  //       pathname === '/series' ? await fetchSeries() : await fetchMovies();
+  //     if (results) {
+  //       setResults(results);
+  //       setFilteredItems(results);
+  //       setLoading(false);
+  //     }
+  //   }
+  //   getData();
+  // }, [fetchMovies, fetchSeries, pathname]);
 
   return (
     <div className="relative flex flex-col gap-7 h-screen">
       {loading && <Loading />}
-      <div className="flex justify-start">
-        <div ref={dropdownRef} className="relative w-full sm:max-w-sm">
-          <div className=" w-full">
-            <button
-              type="button"
-              onClick={toggleDropdown}
-              className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              {title}
-            </button>
-          </div>
-          {isOpen && (
-            <div className="w-full origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
-              <div className="py-1">
-                {seriesCategory.map((item) => (
-                  <button
-                    key={item.category}
-                    onClick={() => handleClick(item)}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    {item.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+      <div className="sm:flex justify-between gap-2">
+        <div className="inline-flex gap-2 items-center w-full sm:max-w-sm">
+          <input
+            className="px-4 py-2 w-full text-gray-700 rounded-md"
+            type="text"
+            value={searchItem}
+            onChange={handleInputChange}
+            placeholder="Search movies or series..."
+          />
         </div>
       </div>
       <List results={results} />

@@ -21,12 +21,12 @@ export default function Slider({ movies, title, isTop10 }) {
     updateArrowVisibility();
 
     // Cleanup the event listener on component unmount
-    return () => {
-      containerRef.current?.removeEventListener(
-        'scroll',
-        updateArrowVisibility
-      );
-    };
+    // return () => {
+    //   containerRef.current?.removeEventListener(
+    //     'scroll',
+    //     updateArrowVisibility
+    //   );
+    // };
   }, []);
 
   const slideLeft = () => {
