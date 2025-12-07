@@ -7,7 +7,7 @@ async function fetchDetails(type, id) {
 }
 
 export default async function SeriesDetails({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const serie = await fetchDetails('tv', id);
 
   return (

@@ -7,7 +7,7 @@ async function fetchDetails(type, id) {
 }
 
 export default async function MovieDetails({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const movie = await fetchDetails('movie', id);
 
   return (
