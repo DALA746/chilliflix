@@ -16,8 +16,6 @@ export default function Media({ fetchSeries, fetchMovies }) {
     const searchTerm = e.target.value;
     setSearchItem(searchTerm);
 
-    console.log(results, 'results from search');
-
     const filterMedia = (item) => {
       if (pathname === '/movies') {
         return item.title?.toLowerCase().includes(searchTerm.toLowerCase());

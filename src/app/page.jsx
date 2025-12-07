@@ -1,7 +1,7 @@
 import HeroBanner from './components/HeroBanner';
 import './globals.css';
-import { API_URL } from '../app/utils/urls';
-import Slider from '../app/components/Slider';
+import { API_URL } from './utils/urls';
+import Slider from './components/Slider';
 
 function fetchAll() {
   const urls = [
@@ -24,6 +24,21 @@ function fetchAll() {
 export default async function Home() {
   const [popularData, topRatedData, nowPlayingData, upcomingData, seriesData] =
     await fetchAll();
+
+  // Check if data exists and has results
+  if (
+    !popularData?.data?.results ||
+    !upcomingData?.data?.results ||
+    !seriesData?.data?.results
+  ) {
+    return (
+      <main className="sm:relative md:absolute top-0 z-0 w-full">
+        <div className="p-6 text-center text-white">
+          <p>Failed to load data. Please try again later.</p>
+        </div>
+      </main>
+    );
+  }
 
   const random =
     popularData.data.results[
