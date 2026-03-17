@@ -3,7 +3,7 @@ import './globals.css';
 import { API_URL } from './utils/urls';
 import Slider from './components/Slider';
 
-function fetchAll() {
+async function fetchAll() {
   const urls = [
     API_URL('movie', 'popular', 1),
     API_URL('movie', 'top_rated', 1),
@@ -11,14 +11,32 @@ function fetchAll() {
     API_URL('movie', 'upcoming', 1),
     API_URL('tv', 'top_rated', 1)
   ];
-  return Promise.all(
-    urls.map((url) =>
-      fetch(url, { cache: 'no-store' })
-        .then((r) => r.json())
-        .then((data) => ({ data, url }))
-        .catch((error) => ({ error, url }))
-    )
-  );
+
+  try {
+    const results = await Promise.all(
+      urls.map(async (url) => {
+        try {
+          console.log(`Fetching: ${url}`);
+          const response = await fetch(url, { cache: 'no-store' });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} for ${url}`);
+          }
+
+          const data = await response.json();
+          console.log(`Success: ${url}`, data?.results?.length || 0, 'results');
+          return { data, url };
+        } catch (error) {
+          console.error(`Error fetching ${url}:`, error.message);
+          return { data: null, url };
+        }
+      })
+    );
+    return results;
+  } catch (error) {
+    console.error('fetchAll failed:', error);
+    throw error;
+  }
 }
 
 export default async function Home() {
